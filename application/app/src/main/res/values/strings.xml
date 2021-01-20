@@ -8,6 +8,7 @@
     <string name="startCounting">0</string>
     <string name="config">Configurations</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="counting">Counting</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
