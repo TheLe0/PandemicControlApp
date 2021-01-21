@@ -21,6 +21,30 @@ class MainActivity : AppCompatActivity() {
         val counting = this.getStoredCounting()
         counter.text = counting
 
+        val increaseButton :FloatingActionButton = findViewById(R.id.addOneButton)
+        if (this.outOfBounds(counting!!))
+        {
+            increaseButton.isEnabled = false
+            increaseButton.isClickable = false
+        }
+        else
+        {
+            increaseButton.isEnabled = true
+            increaseButton.isClickable = true
+        }
+
+        val decreaseButton :FloatingActionButton = findViewById(R.id.delOneButton)
+        if (this.isNegative(counting!!))
+        {
+            decreaseButton.isEnabled = false
+            decreaseButton.isClickable = false
+        }
+        else
+        {
+            decreaseButton.isEnabled = true
+            decreaseButton.isClickable = true
+        }
+
         val settings :FloatingActionButton = findViewById(R.id.settingsButton)
         settings.setOnClickListener{
             val intent = Intent(this, ConfigurationActivity::class.java)
@@ -35,6 +59,30 @@ class MainActivity : AppCompatActivity() {
         val counter : TextView = findViewById(R.id.countingField)
         val counting = this.getStoredCounting()
         counter.text = counting
+
+        val increaseButton :FloatingActionButton = findViewById(R.id.addOneButton)
+        if (this.outOfBounds(counting!!))
+        {
+            increaseButton.isEnabled = false
+            increaseButton.isClickable = false
+        }
+        else
+        {
+            increaseButton.isEnabled = true
+            increaseButton.isClickable = true
+        }
+
+        val decreaseButton :FloatingActionButton = findViewById(R.id.delOneButton)
+        if (this.isNegative(counting!!))
+        {
+            decreaseButton.isEnabled = false
+            decreaseButton.isClickable = false
+        }
+        else
+        {
+            decreaseButton.isEnabled = true
+            decreaseButton.isClickable = true
+        }
     }
 
     fun increaseOne(view: View)
@@ -43,6 +91,25 @@ class MainActivity : AppCompatActivity() {
         val counting = (counter.text.toString().toInt() + 1).toString()
         counter.text = counting
         this.updateCounting(counting)
+
+        val increaseButton :FloatingActionButton = findViewById(R.id.addOneButton)
+        if (this.outOfBounds(counting!!))
+        {
+            increaseButton.isEnabled = false
+            increaseButton.isClickable = false
+        }
+
+        val decreaseButton :FloatingActionButton = findViewById(R.id.delOneButton)
+        if (this.isNegative(counting!!))
+        {
+            decreaseButton.isEnabled = false
+            decreaseButton.isClickable = false
+        }
+        else
+        {
+            decreaseButton.isEnabled = true
+            decreaseButton.isClickable = true
+        }
     }
 
     fun decreaseOne(view: View)
@@ -51,14 +118,25 @@ class MainActivity : AppCompatActivity() {
         val counting = (counter.text.toString().toInt() - 1).toString()
         counter.text = counting
         this.updateCounting(counting)
-    }
 
-    fun reset(view: View)
-    {
-        val counter : TextView = findViewById(R.id.countingField)
-        val counting = getString(R.string.startCounting)
-        counter.text = counting
-        this.updateCounting(counting)
+        val increaseButton :FloatingActionButton = findViewById(R.id.addOneButton)
+        if (!this.outOfBounds(counting!!))
+        {
+            increaseButton.isEnabled = true
+            increaseButton.isClickable = true
+        }
+
+        val decreaseButton :FloatingActionButton = findViewById(R.id.delOneButton)
+        if (this.isNegative(counting!!))
+        {
+            decreaseButton.isEnabled = false
+            decreaseButton.isClickable = false
+        }
+        else
+        {
+            decreaseButton.isEnabled = true
+            decreaseButton.isClickable = true
+        }
     }
 
     private fun updateCounting(counting :String)
@@ -82,5 +160,37 @@ class MainActivity : AppCompatActivity() {
                 Configuration.STORED_COUNTING,
                 getString(R.string.startCounting)
         )
+    }
+
+    private fun getLimitCounting() :String?
+    {
+        val preferences : SharedPreferences = getSharedPreferences(
+                Configuration.CONFIG_FILE,
+                0
+        )
+        return preferences.getString(
+                Configuration.LIMIT_COUNTING,
+                getString(R.string.startCounting)
+        )
+    }
+
+    private fun outOfBounds(counting: String) :Boolean
+    {
+        if (counting.toInt() >= this.getLimitCounting()?.toInt()!!)
+        {
+            return true
+        }
+
+        return false
+    }
+
+    private fun isNegative(counting: String) :Boolean
+    {
+        if (counting.toInt() < 0)
+        {
+            return true
+        }
+
+        return false
     }
 }

@@ -4,21 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:textAlignment="center"
+    android:textAlignment="textStart"
     tools:context=".ConfigurationActivity">
 
     <TextView
         android:id="@+id/labelCounting"
-        android:layout_width="68dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="108dp"
+        android:layout_width="73dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="104dp"
         android:text="@string/counting"
-        android:textAlignment="textEnd"
+        android:textAlignment="textStart"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.189" />
+        app:layout_constraintVertical_bias="0.205" />
 
     <EditText
         android:id="@+id/currentCounting"
@@ -42,12 +42,50 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="80dp"
-        android:text="@string/save"
         android:onClick="save"
+        android:text="@string/save"
         app:backgroundTint="@color/green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.462"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/resetCounting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:onClick="reset"
+        android:text="@string/reset"
+        app:backgroundTint="@color/red"
+        app:layout_constraintEnd_toEndOf="@+id/currentCounting"
+        app:layout_constraintHorizontal_bias="0.703"
+        app:layout_constraintStart_toStartOf="@+id/labelCounting"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/labelLimitCounting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/limit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelCounting" />
+
+    <EditText
+        android:id="@+id/limitCounting"
+        android:layout_width="68dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/labelLimitCounting"
+        app:layout_constraintTop_toBottomOf="@+id/currentCounting"
+        tools:ignore="LabelFor"
+        android:autofillHints="" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
