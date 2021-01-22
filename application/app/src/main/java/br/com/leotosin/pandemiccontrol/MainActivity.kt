@@ -3,7 +3,6 @@ package br.com.leotosin.pandemiccontrol
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -22,9 +21,13 @@ class MainActivity : AppCompatActivity() {
 
         val counter : TextView = findViewById(R.id.countingField)
         val counting = this.getStoredCounting()
+        val nearLimit = this.getLimitAlert().toInt()
+        val decreaseButton :FloatingActionButton = findViewById(R.id.delOneButton)
+        val increaseButton :FloatingActionButton = findViewById(R.id.addOneButton)
+
         counter.text = counting
 
-        val increaseButton :FloatingActionButton = findViewById(R.id.addOneButton)
+
         if (this.outOfBounds(counting!!))
         {
             counter.setTextColor(getColor(R.color.red))
@@ -37,7 +40,14 @@ class MainActivity : AppCompatActivity() {
         }
         else
         {
-            counter.setTextColor(getColor(R.color.green))
+            if (nearLimit <= counting.toInt())
+            {
+                counter.setTextColor(getColor(R.color.yellow))
+            }
+            else
+            {
+                counter.setTextColor(getColor(R.color.green))
+            }
             increaseButton.isEnabled = true
             increaseButton.isClickable = true
             ViewCompat.setBackgroundTintList(
@@ -46,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        val decreaseButton :FloatingActionButton = findViewById(R.id.delOneButton)
+
         if (this.isNegative(counting))
         {
             decreaseButton.isEnabled = false
@@ -64,7 +74,6 @@ class MainActivity : AppCompatActivity() {
                     decreaseButton,
                     ColorStateList.valueOf(getColor(R.color.red))
             )
-            counter.setTextColor(getColor(R.color.green))
         }
 
         val settings :FloatingActionButton = findViewById(R.id.settingsButton)
@@ -80,6 +89,8 @@ class MainActivity : AppCompatActivity() {
 
         val counter : TextView = findViewById(R.id.countingField)
         val counting = this.getStoredCounting()
+        val nearLimit = this.getLimitAlert().toInt()
+
         counter.text = counting
 
         val increaseButton :FloatingActionButton = findViewById(R.id.addOneButton)
@@ -95,7 +106,16 @@ class MainActivity : AppCompatActivity() {
         }
         else
         {
-            counter.setTextColor(getColor(R.color.green))
+            if (nearLimit <= counting.toInt())
+            {
+                counter.setTextColor(getColor(R.color.yellow))
+            }
+            else
+            {
+                counter.setTextColor(getColor(R.color.green))
+            }
+
+
             increaseButton.isEnabled = true
             increaseButton.isClickable = true
             ViewCompat.setBackgroundTintList(
@@ -127,8 +147,11 @@ class MainActivity : AppCompatActivity() {
 
     fun increaseOne(view: View)
     {
+
         val counter : TextView = findViewById(R.id.countingField)
         val counting = (counter.text.toString().toInt() + 1).toString()
+        val nearLimit = this.getLimitAlert().toInt()
+
         counter.text = counting
         this.updateCounting(counting)
 
@@ -142,6 +165,17 @@ class MainActivity : AppCompatActivity() {
                     increaseButton,
                     ColorStateList.valueOf(getColor(R.color.darkGrey))
             )
+        }
+        else
+        {
+            if (nearLimit <= counting.toInt())
+            {
+                counter.setTextColor(getColor(R.color.yellow))
+            }
+            else
+            {
+                counter.setTextColor(getColor(R.color.green))
+            }
         }
 
         val decreaseButton :FloatingActionButton = findViewById(R.id.delOneButton)
@@ -169,13 +203,23 @@ class MainActivity : AppCompatActivity() {
     {
         val counter : TextView = findViewById(R.id.countingField)
         val counting = (counter.text.toString().toInt() - 1).toString()
+        val nearLimit = this.getLimitAlert().toInt()
+
         counter.text = counting
         this.updateCounting(counting)
 
         val increaseButton :FloatingActionButton = findViewById(R.id.addOneButton)
         if (!this.outOfBounds(counting))
         {
-            counter.setTextColor(getColor(R.color.green))
+            if (nearLimit <= counting.toInt())
+            {
+                counter.setTextColor(getColor(R.color.yellow))
+            }
+            else
+            {
+                counter.setTextColor(getColor(R.color.green))
+            }
+
             increaseButton.isEnabled = true
             increaseButton.isClickable = true
             ViewCompat.setBackgroundTintList(
@@ -185,7 +229,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val decreaseButton :FloatingActionButton = findViewById(R.id.delOneButton)
-        if (this.isNegative(counting!!))
+        if (this.isNegative(counting))
         {
             decreaseButton.isEnabled = false
             decreaseButton.isClickable = false
@@ -203,6 +247,55 @@ class MainActivity : AppCompatActivity() {
                     ColorStateList.valueOf(getColor(R.color.red))
             )
         }
+    }
+
+    private fun getTypeCounting() :String?
+    {
+        val preferences : SharedPreferences = getSharedPreferences(
+                Configuration.CONFIG_FILE,
+                0
+        )
+
+        return preferences.getString(
+                Configuration.TYPE_LIMIT,
+                R.id.unitType.toString()
+        )
+    }
+
+    private fun getNumBlock() :String?
+    {
+        val preferences : SharedPreferences = getSharedPreferences(
+                Configuration.CONFIG_FILE,
+                0
+        )
+        return preferences.getString(
+                Configuration.NUM_BLOCK,
+                this.getLimitCounting()
+        )
+    }
+
+    private fun getLimitAlert() : String
+    {
+        val type = this.getTypeCounting()?.toInt()
+        val numBlock  = this.getNumBlock()?.toInt()
+        var result = this.getLimitCounting()?.toInt()
+
+        when (type)
+        {
+            R.id.unitType ->
+            {
+                result = numBlock
+            }
+            R.id.percentType ->
+            {
+                if (result != null && numBlock != null)
+                {
+                    result *= (numBlock / 100)
+                }
+            }
+        }
+
+        return result.toString()
     }
 
     private fun updateCounting(counting :String)
