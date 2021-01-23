@@ -7,4 +7,14 @@ prevent the virus to spread easily
 
 Is only compound by 2 activities, the main and the user preferences one.
 
+* Main Activity
+
+The main activity is where the user will increase and decrease the counting and go to the user preferences. This is all the user can do in the activity, is very simple and intuitive.
+
 ![Main](./images/main.png)
+
+* User Preferences Activity
+
+This is where the user can configure what the users can do and the limits for the counting
+
+![Configs](./images/configs.png)
