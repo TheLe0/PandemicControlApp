@@ -3,6 +3,7 @@ dist: xenial
 os: linux
 jdk: 
   - openjdk15
+  - oraclejdk8
   - oraclejdk15 
 env:
  global:
@@ -22,7 +23,3 @@ android:
     - extra-google-m2repository
     - extra-android-m2repository
     - addon-google_apis-google-$ANDROID_API_LEVEL
-before_script:
-    - mkdir -p "$ANDROID_HOME/licenses"
-script:
-    - ./gradlew build check
