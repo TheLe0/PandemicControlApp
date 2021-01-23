@@ -1,5 +1,7 @@
 # PandemicControlApp
 
+[![Build Status](https://www.travis-ci.com/TheLe0/PandemicControlApp.svg?branch=main)](https://www.travis-ci.com/TheLe0/PandemicControlApp)
+
 This is a simple app for use on supermarkets, events, partys or others establishments during the pandemic, to control and know exactly how much people are inside, to
 prevent the virus to spread easily
 
