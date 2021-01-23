@@ -2,11 +2,7 @@ language: android
 dist: xenial
 os: linux
 jdk: 
-  - openjdk11
-  - openjdk14
   - openjdk15
-  - oraclejdk11
-  - oraclejdk14
   - oraclejdk15 
 env:
  global:
