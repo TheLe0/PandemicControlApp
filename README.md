@@ -1,6 +1,6 @@
-# PandemicControlApp
+# Semaphore
 
-![Android CI](https://github.com/TheLe0/PandemicControlApp/workflows/Android%20CI/badge.svg)
+![Android CI](https://github.com/TheLe0/Semaphore/workflows/Android%20CI/badge.svg)
 
 This is a simple app for use on supermarkets, events, partys or others establishments during the pandemic, to control and know exactly how much people are inside, to
 prevent the virus to spread easily
